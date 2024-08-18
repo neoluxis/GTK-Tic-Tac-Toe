@@ -4,8 +4,12 @@
 
 #define GRID_SIZE 3
 
-typedef enum { EMPTY, X, O } Player;
-typedef enum { MODE_HUMAN, MODE_COMPUTER } GameMode;
+typedef enum {
+    EMPTY, X, O
+} Player;
+typedef enum {
+    MODE_HUMAN, MODE_COMPUTER
+} GameMode;
 
 typedef struct {
     Player grid[GRID_SIZE][GRID_SIZE];
@@ -73,9 +77,12 @@ static void end_game(GameState *state, const char *message) {
             "%s", message
     );
 
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(gtk_widget_get_ancestor(state->buttons[0][0], GTK_TYPE_WINDOW)));
+    gtk_window_set_transient_for(GTK_WINDOW(dialog),
+                                 GTK_WINDOW(gtk_widget_get_ancestor(state->buttons[0][0], GTK_TYPE_WINDOW)));
     g_signal_connect(dialog, "response", G_CALLBACK(gtk_window_destroy), NULL);
     gtk_widget_show(dialog);
+//    gtk_window_set_child(GTK_WINDOW(dialog), dialog);
+//    gtk_window_present(GTK_WINDOW(dialog));
 }
 
 static void computer_move(GameState *state) {
@@ -98,7 +105,7 @@ static void computer_move(GameState *state) {
 }
 
 static void on_button_click(GtkWidget *widget, gpointer data) {
-    GameState *state = (GameState *)data;
+    GameState *state = (GameState *) data;
     if (state->game_over) return;
 
     int row, col;
@@ -131,12 +138,12 @@ static void on_button_click(GtkWidget *widget, gpointer data) {
 }
 
 static void on_reset_button_click(GtkWidget *widget, gpointer data) {
-    GameState *state = (GameState *)data;
+    GameState *state = (GameState *) data;
     reset_game(state);
 }
 
 static void on_mode_button_click(GtkWidget *widget, gpointer data) {
-    GameState *state = (GameState *)data;
+    GameState *state = (GameState *) data;
     if (state->mode == MODE_HUMAN) {
         state->mode = MODE_COMPUTER;
         gtk_button_set_label(GTK_BUTTON(widget), "Mode: Computer");
@@ -185,11 +192,15 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_box_append(GTK_BOX(vbox), mode_button);
     g_signal_connect(mode_button, "clicked", G_CALLBACK(on_mode_button_click), state);
 
-    gtk_widget_show(window);
+    gtk_widget_set_vexpand(grid, TRUE);
+    gtk_widget_set_hexpand(grid, TRUE);
+//    gtk_widget_show(window);
+    gtk_window_set_child(GTK_WINDOW(window), vbox);
+    gtk_window_present(GTK_WINDOW(window));
 }
 
 int main(int argc, char **argv) {
-    GtkApplication *app = gtk_application_new("com.example.tictactoe", G_APPLICATION_DEFAULT_FLAGS);
+    GtkApplication *app = gtk_application_new("org.eu.neolux.tictactoe", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
     int status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
