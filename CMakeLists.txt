@@ -37,6 +37,8 @@ link_libraries(
         gobject-2.0
 )
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
+
 add_executable(TicTacToe main.c
 #        game.c
 #        game.h)
