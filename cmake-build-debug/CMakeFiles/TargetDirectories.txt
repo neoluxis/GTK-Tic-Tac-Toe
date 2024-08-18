@@ -1,3 +1,0 @@
-/home/neolux/workspace/GTK4/helloword/cmake-build-debug/CMakeFiles/TicTacToe.dir
-/home/neolux/workspace/GTK4/helloword/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/neolux/workspace/GTK4/helloword/cmake-build-debug/CMakeFiles/rebuild_cache.dir
