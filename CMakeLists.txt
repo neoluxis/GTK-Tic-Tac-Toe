@@ -3,43 +3,13 @@ project(TicTacToe C)
 
 set(CMAKE_C_STANDARD 11)
 
-include_directories(
-        /usr/include/gtk-4.0
-        /usr/include/pango-1.0
-        /usr/include/harfbuzz
-        /usr/include/gdk-pixbuf-2.0
-        /usr/include/cairo
-        /usr/include/glib-2.0
-        /usr/lib/glib-2.0/include
-        /usr/include/freetype2
-        /usr/include/graphene-1.0
-        /usr/lib/graphene-1.0/include
-        /usr/include/libmount
-        /usr/include/blkid
-        /usr/include/fribidi
-        /usr/include/sysprof-6
-        /usr/include/libpng16
-        /usr/include/pixman-1
-)
+find_package(PkgConfig REQUIRED)
 
-link_libraries(
-        gtk-4
-        harfbuzz
-        pangocairo-1.0
-        pango-1.0
-        gdk_pixbuf-2.0
-        cairo-gobject
-        cairo
-        vulkan
-        graphene-1.0
-        gio-2.0
-        glib-2.0
-        gobject-2.0
-)
+pkg_check_modules(GTK REQUIRED gtk+-3.0)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-deprecated-declarations")
+include_directories(${GTK_INCLUDE_DIRS})
+link_directories(${GTK_LIBRARY_DIRS})
+add_compile_options(${GTK_CFLAGS_OTHER})
 
-add_executable(TicTacToe main.c
-#        game.c
-#        game.h)
-)
+add_executable(Arrow_Shoukyo main.c)
+target_link_libraries(Arrow_Shoukyo ${GTK_LIBRARIES})
